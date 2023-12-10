@@ -6,14 +6,14 @@
  *
  * Return: nothing, but sets errno.
  */
-void expand_variables(data_of_program *data)
+void expand_variables(container_of_program *data)
 {
 	int i, j;
 	char line[BUFFER_SIZE] = {0}, expansion[BUFFER_SIZE] = {'\0'}, *temp;
 
-	if (data->input_line == NULL)
+	if (data->custom_input_line == NULL)
 		return;
-	buffer_add(line, data->input_line);
+	buffer_add(line, data->custom_input_line);
 	for (i = 0; line[i]; i++)
 		if (line[i] == '#')
 			line[i--] = '\0';
@@ -22,14 +22,14 @@ void expand_variables(data_of_program *data)
 			line[i] = '\0';
 			long_to_string(errno, expansion, 10);
 			buffer_add(line, expansion);
-			buffer_add(line, data->input_line + i + 2);
+			buffer_add(line, data->custom_input_line + i + 2);
 		}
 		else if (line[i] == '$' && line[i + 1] == '$')
 		{
 			line[i] = '\0';
 			long_to_string(getpid(), expansion, 10);
 			buffer_add(line, expansion);
-			buffer_add(line, data->input_line + i + 2);
+			buffer_add(line, data->custom_input_line + i + 2);
 		}
 		else if (line[i] == '$' && (line[i + 1] == ' ' || line[i + 1] == '\0'))
 			continue;
@@ -43,10 +43,10 @@ void expand_variables(data_of_program *data)
 			temp ? buffer_add(line, temp) : 1;
 			buffer_add(line, expansion);
 		}
-	if (!str_compare(data->input_line, line, 0))
+	if (!str_compare(data->custom_input_line, line, 0))
 	{
-		free(data->input_line);
-		data->input_line = str_duplicate(line);
+		free(data->custom_input_line);
+		data->custom_input_line = str_duplicate(line);
 	}
 }
 
@@ -56,15 +56,15 @@ void expand_variables(data_of_program *data)
  *
  * Return: nothing, but sets errno.
  */
-void expand_alias(data_of_program *data)
+void expand_alias(container_of_program *data)
 {
 	int i, j, was_expanded = 0;
 	char line[BUFFER_SIZE] = {0}, expansion[BUFFER_SIZE] = {'\0'}, *temp;
 
-	if (data->input_line == NULL)
+	if (data->custom_input_line == NULL)
 		return;
 
-	buffer_add(line, data->input_line);
+	buffer_add(line, data->custom_input_line);
 
 	for (i = 0; line[i]; i++)
 	{
@@ -87,8 +87,8 @@ void expand_alias(data_of_program *data)
 	}
 	if (was_expanded)
 	{
-		free(data->input_line);
-		data->input_line = str_duplicate(line);
+		free(data->custom_input_line);
+		data->custom_input_line = str_duplicate(line);
 	}
 }
 

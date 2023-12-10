@@ -8,21 +8,21 @@ int check_file(char *full_path);
  * Return: 0 if success, errcode otherwise
  */
 
-int find_program(data_of_program *data)
+int find_program(container_of_program *data)
 {
 	int i = 0, ret_code = 0;
 	char **directories;
 
-	if (!data->command_name)
+	if (!data->custom_command_name)
 		return (2);
 
 	/**if is a full_path or an executable in the same path */
-	if (data->command_name[0] == '/' || data->command_name[0] == '.')
-		return (check_file(data->command_name));
+	if (data->custom_command_name[0] == '/' || data->custom_command_name[0] == '.')
+		return (check_file(data->custom_command_name));
 
-	free(data->tokens[0]);
-	data->tokens[0] = str_concat(str_duplicate("/"), data->command_name);
-	if (!data->tokens[0])
+	free(data->custom_tokens[0]);
+	data->custom_tokens[0] = str_concat(str_duplicate("/"), data->custom_command_name);
+	if (!data->custom_tokens[0])
 		return (2);
 
 	directories = tokenize_path(data);/* search in the PATH */
@@ -34,19 +34,19 @@ int find_program(data_of_program *data)
 	}
 	for (i = 0; directories[i]; i++)
 	{/* appends the function_name to path */
-		directories[i] = str_concat(directories[i], data->tokens[0]);
+		directories[i] = str_concat(directories[i], data->custom_tokens[0]);
 		ret_code = check_file(directories[i]);
 		if (ret_code == 0 || ret_code == 126)
 		{/* the file was found, is not a directory and has execute permisions*/
 			errno = 0;
-			free(data->tokens[0]);
-			data->tokens[0] = str_duplicate(directories[i]);
+			free(data->custom_tokens[0]);
+			data->custom_tokens[0] = str_duplicate(directories[i]);
 			free_array_of_pointers(directories);
 			return (ret_code);
 		}
 	}
-	free(data->tokens[0]);
-	data->tokens[0] = NULL;
+	free(data->custom_tokens[0]);
+	data->custom_tokens[0] = NULL;
 	free_array_of_pointers(directories);
 	return (ret_code);
 }
@@ -57,7 +57,7 @@ int find_program(data_of_program *data)
  * Return: array of path directories
  */
 
-char **tokenize_path(data_of_program *data)
+char **tokenize_path(container_of_program *data)
 {
 	int i = 0;
 	int counter_directories = 2;

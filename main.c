@@ -3,15 +3,15 @@
  * main - initialize the variables of the program
  * @argc: number of values received from the command line
  * @argv: values received from the command line
- * @env: number of values received from the command line
+ * @custom_env: number of values received from the command line
  * Return: zero on succes.
  */
-int main(int argc, char *argv[], char *env[])
+int main(int argc, char *argv[], char *custom_env[])
 {
-	data_of_program data_struct = {NULL}, *data = &data_struct;
+	container_of_program data_struct = {NULL}, *data = &data_struct;
 	char *prompt = "";
 
-	initialize_data(data, argc, argv, env);
+	initialize_data(data, argc, argv, custom_env);
 
 	signal(SIGINT, handle_ctrl_c);
 
@@ -47,41 +47,41 @@ void initialize_data(data_of_program *data, int argc, char *argv[], char **env)
 {
 	int i = 0;
 
-	data->program_name = argv[0];
-	data->input_line = NULL;
-	data->command_name = NULL;
-	data->exec_counter = 0;
+	data->custom_program_name = argv[0];
+	data->custom_input_line = NULL;
+	data->custom_command_name = NULL;
+data->custom_exec_counter = 0;
 	
 	if (argc == 1)
-		data->file_descriptor = STDIN_FILENO;
+		data->custom_fd = STDIN_FILENO;
 	else
 	{
-		data->file_descriptor = open(argv[1], O_RDONLY);
-		if (data->file_descriptor == -1)
+		data->custom_fd = open(argv[1], O_RDONLY);
+		if (data->custom_fd == -1)
 		{
-			_printe(data->program_name);
+			_printe(data->custom_program_name);
 			_printe(": 0: Can't open ");
 			_printe(argv[1]);
 			_printe("\n");
 			exit(127);
 		}
 	}
-	data->tokens = NULL;
-	data->env = malloc(sizeof(char *) * 50);
-	if (env)
+	data->custom_tokens = NULL;
+	data->custom_env = malloc(sizeof(char *) * 50);
+	if (custom_env)
 	{
-		for (; env[i]; i++)
+		for (; custom_env[i]; i++)
 		{
-			data->env[i] = str_duplicate(env[i]);
+			data->custom_env[i] = str_duplicate(custom_env[i]);
 		}
 	}
-	data->env[i] = NULL;
-	env = data->env;
+	data->custom_env[i] = NULL;
+	env = data->custom_env;
 
-	data->alias_list = malloc(sizeof(char *) * 20);
+	data->custom_alias_list = malloc(sizeof(char *) * 20);
 	for (i = 0; i < 20; i++)
 	{
-		data->alias_list[i] = NULL;
+		data->custom_alias_list[i] = NULL;
 	}
 }
 /**
@@ -89,11 +89,11 @@ void initialize_data(data_of_program *data, int argc, char *argv[], char **env)
  * @prompt: prompt to be printed
  * @data: its a infinite loop that shows the prompt
  */
-void ifo(char *prompt, data_of_program *data)
+void ifo(char *prompt, container_of_program *data)
 {
 	int error_code = 0, string_len = 0;
 
-	while (++(data->exec_counter))
+	while (++(data->custom_exec_counter))
 	{
 		_print(prompt);
 		error_code = string_len = custom_getline(data);
@@ -108,7 +108,7 @@ void ifo(char *prompt, data_of_program *data)
 			expand_alias(data);
 			expand_variables(data);
 			tokenize(data);
-			if (data->tokens[0])
+			if (data->custom_tokens[0])
 			{ /* if a text is given to prompt, execute */
 				error_code = execute(data);
 				if (error_code != 0)

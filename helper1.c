@@ -10,28 +10,28 @@
  */
 void long_to_string(long number, char *string, int base)
 {
-	int index = 0, inNegative = 0;
-	long cociente = number;
+	int i = 0, Negative = 0;
+	long chris = number;
 	char letters[] = {"0123456789abcdef"};
 
-	if (cociente == 0)
-		string[index++] = '0';
+	if (chris == 0)
+		string[i++] = '0';
 
 	if (string[0] == '-')
-		inNegative = 1;
+		Negative = 1;
 
-	while (cociente)
+	while (chris)
 	{
-		if (cociente < 0)
-			string[index++] = letters[-(cociente % base)];
+		if (chris < 0)
+			string[i++] = letters[-(chris % base)];
 		else
-			string[index++] = letters[cociente % base];
-		cociente /= base;
+			string[i++] = letters[chris % base];
+		chris /= base;
 	}
-	if (inNegative)
-		string[index++] = '-';
+	if (Negative)
+		string[i++] = '-';
 
-	string[index] = '\0';
+	string[i] = '\0';
 	str_reverse(string);
 }
 
@@ -44,15 +44,15 @@ void long_to_string(long number, char *string, int base)
  */
 int _atoi(char *s)
 {
-	int sign = 1;
+	int signal = 1;
 	unsigned int number = 0;
-	/*1- analisys sign*/
+
 	while (!('0' <= *s && *s <= '9') && *s != '\0')
 	{
 		if (*s == '-')
-			sign *= -1;
+			signal *= -1;
 		if (*s == '+')
-			sign *= +1;
+			signal *= +1;
 		s++;
 	}
 
@@ -63,7 +63,7 @@ int _atoi(char *s)
 		number = (number * 10) + (*s - '0');
 		s++;
 	}
-	return (number * sign);
+	return (number * signal);
 }
 
 /**
@@ -75,13 +75,13 @@ int _atoi(char *s)
  */
 int count_characters(char *string, char *character)
 {
-	int i = 0, counter = 0;
+	int i = 0, count = 0;
 
 	for (; string[i]; i++)
 	{
 		if (string[i] == character[0])
-			counter++;
+			count++;
 	}
-	return (counter);
+	return (count);
 }
 

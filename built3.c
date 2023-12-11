@@ -97,14 +97,14 @@ int set_work_directory(container_of_program *data, char *new_dir)
 int builtin_help(container_of_program *data)
 {
 	int i, length = 0;
-	char *mensajes[6] = {NULL};
+	char *chriswork[6] = {NULL};
 
-	mensajes[0] = HELP_MSG;
+	chriswork[0] = HELP_MSG;
 
 	/* validate args */
 	if (data->custom_tokens[1] == NULL)
 	{
-		_print(mensajes[0] + 6);
+		_print(chriswork[0] + 6);
 		return (1);
 	}
 	if (data->custom_tokens[2] != NULL)
@@ -113,18 +113,18 @@ int builtin_help(container_of_program *data)
 		perror(data->custom_command_name);
 		return (5);
 	}
-	mensajes[1] = HELP_EXIT_MSG;
-	mensajes[2] = HELP_ENV_MSG;
-	mensajes[3] = HELP_SETENV_MSG;
-	mensajes[4] = HELP_UNSETENV_MSG;
-	mensajes[5] = HELP_CD_MSG;
+	chriswork[1] = HELP_EXIT_MSG;
+	chriswork[2] = HELP_ENV_MSG;
+	chriswork[3] = HELP_SETENV_MSG;
+	chriswork[4] = HELP_UNSETENV_MSG;
+	chriswork[5] = HELP_CD_MSG;
 
-	for (i = 0; mensajes[i]; i++)
+	for (i = 0; chriswork[i]; i++)
 	{
 		length = str_length(data->custom_tokens[1]);
-		if (str_compare(data->custom_tokens[1], mensajes[i], length))
+		if (str_compare(data->custom_tokens[1], chriswork[i], length))
 		{
-			_print(mensajes[i] + length + 1);
+			_print(chriswork[i] + length + 1);
 			return (1);
 		}
 	}

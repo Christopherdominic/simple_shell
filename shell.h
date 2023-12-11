@@ -110,11 +110,11 @@ int env_remove_key(char *key, container_of_program *data);
 
 void print_environ(container_of_program *data);
 
-int _print(char *string);
+int custom_print(char *string);
 
-int _printe(char *string);
+int custom_printe(char *string);
 
-int _print_error(int errorcode, container_of_program *data);
+int custom_print_error(int errorcode, container_of_program *data);
 
 int str_length(char *string);
 

@@ -32,8 +32,8 @@ int main(int argc, char *argv[], char *env[])
  */
 void handle_ctrl_c(int opr UNUSED)
 {
-	_print("\n");
-	_print(PROMPT_MSG);
+	custom_print("\n");
+	custom_print(PROMPT_MSG);
 }
 
 /**
@@ -59,10 +59,10 @@ data->custom_exec_counter = 0;
 		data->custom_fd = open(argv[1], O_RDONLY);
 		if (data->custom_fd == -1)
 		{
-			_printe(data->custom_program_name);
-			_printe(": 0: Can't open ");
-			_printe(argv[1]);
-			_printe("\n");
+			custom_printe(data->custom_program_name);
+			custom_printe(": 0: Can't open ");
+			custom_printe(argv[1]);
+			custom_printe("\n");
 			exit(127);
 		}
 	}
@@ -95,7 +95,7 @@ void ifo(char *prompt, container_of_program *data)
 
 	while (++(data->custom_exec_counter))
 	{
-		_print(prompt);
+		custom_print(prompt);
 		error = string_len = custom_getline(data);
 
 		if (error == EOF)
@@ -112,7 +112,7 @@ void ifo(char *prompt, container_of_program *data)
 			{ /* if a text is given to prompt, execute */
 				error = execute(data);
 				if (error != 0)
-					_print_error(error, data);
+					custom_print_error(error, data);
 			}
 			free_recurrent_data(data);
 		}

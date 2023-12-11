@@ -120,8 +120,8 @@ void print_environ(container_of_program *data)
 
 	for (i = 0; data->custom_env[i]; i++)
 	{
-		_print(data->custom_env[i]);
-		_print("\n");
+		custom_print(data->custom_env[i]);
+		custom_print("\n");
 	}
 }
 

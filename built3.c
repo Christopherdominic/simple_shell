@@ -42,8 +42,8 @@ int builtin_cd(container_of_program *data)
 			directory_old = env_get_key("OLDPWD", data);
 			if (directory_old)
 				error = set_work_directory(data, directory_old);
-			_print(env_get_key("PWD", data));
-			_print("\n");
+			custom_print(env_get_key("PWD", data));
+			custom_print("\n");
 
 			return (error);
 		}
@@ -104,7 +104,7 @@ int builtin_help(container_of_program *data)
 	/* validate args */
 	if (data->custom_tokens[1] == NULL)
 	{
-		_print(chriswork[0] + 6);
+		custom_print(chriswork[0] + 6);
 		return (1);
 	}
 	if (data->custom_tokens[2] != NULL)
@@ -124,7 +124,7 @@ int builtin_help(container_of_program *data)
 		length = str_length(data->custom_tokens[1]);
 		if (str_compare(data->custom_tokens[1], chriswork[i], length))
 		{
-			_print(chriswork[i] + length + 1);
+			custom_print(chriswork[i] + length + 1);
 			return (1);
 		}
 	}

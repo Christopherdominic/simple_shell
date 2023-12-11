@@ -28,8 +28,8 @@ int builtin_env(container_of_program *data)
 				print_environ(data);
 				if (env_get_key(cpname, data) == NULL)
 				{
-					_print(data->custom_tokens[1]);
-					_print("\n");
+					custom_print(data->custom_tokens[1]);
+					custom_print("\n");
 				}
 				else
 				{

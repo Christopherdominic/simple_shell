@@ -29,7 +29,7 @@ int print_alias(container_of_program *data, char *alias)
 				buffer_add(buffer, "'");
 				buffer_add(buffer, data->custom_alias_list[i] + j + 1);
 				buffer_add(buffer, "'\n");
-				_print(buffer);
+				custom_print(buffer);
 			}
 		}
 	}

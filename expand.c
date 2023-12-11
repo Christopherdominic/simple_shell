@@ -8,45 +8,48 @@
  */
 void expand_variables(container_of_program *data)
 {
-	int i, j;
-	char line[BUFFER_SIZE] = {0}, expansion[BUFFER_SIZE] = {'\0'}, *temp;
+	int i;
+	int j;
+	char zep[BUFFER_SIZE] = {0};
+	char expansion[BUFFER_SIZE] = {'\0'};
+	char *temp;
 
 	if (data->custom_input_line == NULL)
 		return;
-	buffer_add(line, data->custom_input_line);
-	for (i = 0; line[i]; i++)
-		if (line[i] == '#')
-			line[i--] = '\0';
-		else if (line[i] == '$' && line[i + 1] == '?')
+	buffer_add(zep, data->custom_input_line);
+	for (i = 0; zep[i]; i++)
+		if (zep[i] == '#')
+			zep[i--] = '\0';
+		else if (zep[i] == '$' && zep[i + 1] == '?')
 		{
-			line[i] = '\0';
+			zep[i] = '\0';
 			long_to_string(errno, expansion, 10);
-			buffer_add(line, expansion);
-			buffer_add(line, data->custom_input_line + i + 2);
+			buffer_add(zep, expansion);
+			buffer_add(zep, data->custom_input_line + i + 2);
 		}
-		else if (line[i] == '$' && line[i + 1] == '$')
+		else if (zep[i] == '$' && zep[i + 1] == '$')
 		{
-			line[i] = '\0';
+			zep[i] = '\0';
 			long_to_string(getpid(), expansion, 10);
-			buffer_add(line, expansion);
-			buffer_add(line, data->custom_input_line + i + 2);
+			buffer_add(zep, expansion);
+			buffer_add(zep, data->custom_input_line + i + 2);
 		}
-		else if (line[i] == '$' && (line[i + 1] == ' ' || line[i + 1] == '\0'))
+		else if (zep[i] == '$' && (zep[i + 1] == ' ' || zep[i + 1] == '\0'))
 			continue;
-		else if (line[i] == '$')
+		else if (zep[i] == '$')
 		{
-			for (j = 1; line[i + j] && line[i + j] != ' '; j++)
-				expansion[j - 1] = line[i + j];
+			for (j = 1; zep[i + j] && zep[i + j] != ' '; j++)
+				expansion[j - 1] = zep[i + j];
 			temp = env_get_key(expansion, data);
-			line[i] = '\0', expansion[0] = '\0';
-			buffer_add(expansion, line + i + j);
-			temp ? buffer_add(line, temp) : 1;
-			buffer_add(line, expansion);
+			zep[i] = '\0', expansion[0] = '\0';
+			buffer_add(expansion, zep + i + j);
+			temp ? buffer_add(zep, temp) : 1;
+			buffer_add(zep, expansion);
 		}
-	if (!str_compare(data->custom_input_line, line, 0))
+	if (!str_compare(data->custom_input_line, zep, 0))
 	{
 		free(data->custom_input_line);
-		data->custom_input_line = str_duplicate(line);
+		data->custom_input_line = str_duplicate(zep);
 	}
 }
 
@@ -58,8 +61,12 @@ void expand_variables(container_of_program *data)
  */
 void expand_alias(container_of_program *data)
 {
-	int i, j, was_expanded = 0;
-	char line[BUFFER_SIZE] = {0}, expansion[BUFFER_SIZE] = {'\0'}, *temp;
+	int i;
+	int j;
+	int expanded = 0;
+	char line[BUFFER_SIZE] = {0};
+	char exp[BUFFER_SIZE] = {'\0'};
+	char*temp;
 
 	if (data->custom_input_line == NULL)
 		return;
@@ -69,23 +76,23 @@ void expand_alias(container_of_program *data)
 	for (i = 0; line[i]; i++)
 	{
 		for (j = 0; line[i + j] && line[i + j] != ' '; j++)
-			expansion[j] = line[i + j];
-		expansion[j] = '\0';
+			exp[j] = line[i + j];
+		exp[j] = '\0';
 
-		temp = get_alias(data, expansion);
+		temp = get_alias(data, exp);
 		if (temp)
 		{
-			expansion[0] = '\0';
-			buffer_add(expansion, line + i + j);
+			exp[0] = '\0';
+			buffer_add(exp, line + i + j);
 			line[i] = '\0';
 			buffer_add(line, temp);
 			line[str_length(line)] = '\0';
-			buffer_add(line, expansion);
-			was_expanded = 1;
+			buffer_add(line, exp);
+			expanded = 1;
 		}
 		break;
 	}
-	if (was_expanded)
+	if (expanded)
 	{
 		free(data->custom_input_line);
 		data->custom_input_line = str_duplicate(line);
@@ -100,14 +107,15 @@ void expand_alias(container_of_program *data)
  */
 int buffer_add(char *buffer, char *str_to_add)
 {
-	int length, i;
+	int len;
+	int i;
 
-	length = str_length(buffer);
+	len = str_length(buffer);
 	for (i = 0; str_to_add[i]; i++)
 	{
-		buffer[length + i] = str_to_add[i];
+		buffer[len + i] = str_to_add[i];
 	}
-	buffer[length + i] = '\0';
-	return (length + i);
+	buffer[len + i] = '\0';
+	return (len + i);
 }
 

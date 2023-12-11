@@ -10,11 +10,11 @@ int builtin_exit(container_of_program *data)
 	int i;
 
 	if (data->custom_tokens[1] != NULL)
-	{/*if exists arg for exit, check if is a number*/
+	{
 		for (i = 0; data->custom_tokens[1][i]; i++)
 			if ((data->custom_tokens[1][i] < '0' || data->custom_tokens[1][i] > '9')
 				&& data->custom_tokens[1][i] != '+')
-			{/*if is not a number*/
+			{
 				errno = 2;
 				return (2);
 			}
@@ -31,21 +31,21 @@ int builtin_exit(container_of_program *data)
  */
 int builtin_cd(container_of_program *data)
 {
-	char *dir_home = env_get_key("HOME", data), *dir_old = NULL;
-	char old_dir[128] = {0};
-	int error_code = 0;
+	char *directory_home = env_get_key("HOME", data), *directory_old = NULL;
+	char old_directory[128] = {0};
+	int error = 0;
 
 	if (data->custom_tokens[1])
 	{
 		if (str_compare(data->custom_tokens[1], "-", 0))
 		{
-			dir_old = env_get_key("OLDPWD", data);
-			if (dir_old)
-				error_code = set_work_directory(data, dir_old);
+			directory_old = env_get_key("OLDPWD", data);
+			if (directory_old)
+				error = set_work_directory(data, directory_old);
 			_print(env_get_key("PWD", data));
 			_print("\n");
 
-			return (error_code);
+			return (error);
 		}
 		else
 		{
@@ -54,10 +54,10 @@ int builtin_cd(container_of_program *data)
 	}
 	else
 	{
-		if (!dir_home)
-			dir_home = getcwd(old_dir, 128);
+		if (!directory_home)
+			directory_home = getcwd(old_directory, 128);
 
-		return (set_work_directory(data, dir_home));
+		return (set_work_directory(data, directory_home));
 	}
 	return (0);
 }
@@ -70,22 +70,22 @@ int builtin_cd(container_of_program *data)
  */
 int set_work_directory(container_of_program *data, char *new_dir)
 {
-	char old_dir[128] = {0};
-	int err_code = 0;
+	char old_directory[128] = {0};
+	int error = 0;
 
-	getcwd(old_dir, 128);
+	getcwd(old_directory, 128);
 
-	if (!str_compare(old_dir, new_dir, 0))
+	if (!str_compare(old_directory, new_dir, 0))
 	{
-		err_code = chdir(new_dir);
-		if (err_code == -1)
+		error = chdir(new_dir);
+		if (error == -1)
 		{
 			errno = 2;
 			return (3);
 		}
 		env_set_key("PWD", new_dir, data);
 	}
-	env_set_key("OLDPWD", old_dir, data);
+	env_set_key("OLDPWD", old_directory, data);
 	return (0);
 }
 

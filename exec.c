@@ -6,19 +6,20 @@
  */
 int execute(container_of_program *data)
 {
-	int retval = 0, status;
+	int heg = 0; 
+	int status;
 	pid_t pidd;
 
 	/* check for program in built ins */
-	retval = builtins_list(data);
-	if (retval != -1)/* if program was found in built ins */
-		return (retval);
+	heg = builtins_list(data);
+	if (heg != -1)/* if program was found in built ins */
+		return (heg);
 
 	/* check for program file system */
-	retval = find_program(data);
-	if (retval)
+	heg = find_program(data);
+	if (heg)
 	{/* if program not found */
-		return (retval);
+		return (heg);
 	}
 	else
 	{/* if program was found */
@@ -30,8 +31,8 @@ int execute(container_of_program *data)
 		}
 		if (pidd == 0)
 		{/* I am the child process, I execute the program*/
-			retval = execve(data->custom_tokens[0], data->custom_tokens, data->custom_env);
-			if (retval == -1) /* if error when execve*/
+			heg = execve(data->custom_tokens[0], data->custom_tokens, data->custom_env);
+			if (heg == -1) /* if error when execve*/
 				perror(data->custom_command_name), exit(EXIT_FAILURE);
 		}
 		else

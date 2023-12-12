@@ -1,11 +1,11 @@
 #include "shell.h"
 
 /**
- * builtin_env - shows the environment where the shell runs
+ * custom_builtin_env - shows the environment where the shell runs
  * @data: struct for the program's data
  * Return: zero if sucess, or other number if its declared in the arguments
  */
-int builtin_env(container_of_program *data)
+int custom_builtin_env(container_of_program *data)
 {
 	int i;
 	char cpname[50] = {'\0'};
@@ -20,7 +20,7 @@ int builtin_env(container_of_program *data)
 		{
 			if (data->custom_tokens[1][i] == '=')
 			{
-				var_copy = str_duplicate(env_get_key(cpname, data));
+				var_copy = custom_str_duplicate(env_get_key(cpname, data));
 				if (var_copy != NULL)
 					env_set_key(cpname, data->custom_tokens[1] + i + 1, data);
 
@@ -48,11 +48,11 @@ int builtin_env(container_of_program *data)
 }
 
 /**
- * builtin_set_env - building the set env
+ * custom_builtin_set_env - building the set env
  * @data: struct for the program's data
  * Return: zero if sucess, or other number if its declared in the arguments
  */
-int builtin_set_env(container_of_program *data)
+int custom_builtin_set_env(container_of_program *data)
 {
 
 	if (data->custom_tokens[1] == NULL || data->custom_tokens[2] == NULL)
@@ -70,11 +70,11 @@ int builtin_set_env(container_of_program *data)
 }
 
 /**
- * builtin_unset_env - build the set env
+ * custom_builtin_unset_env - build the set env
  * @data: struct for the program's data'
  * Return: ..
  */
-int builtin_unset_env(container_of_program *data)
+int custom_builtin_unset_env(container_of_program *data)
 {
 
 	if (data->custom_tokens[1] == NULL)

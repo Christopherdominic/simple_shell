@@ -72,7 +72,7 @@ data->custom_exec_counter = 0;
 	{
 		for (; env[j]; j++)
 		{
-			data->custom_env[j] = str_duplicate(env[j]);
+			data->custom_env[j] = custom_str_duplicate(env[j]);
 		}
 	}
 	data->custom_env[j] = NULL;

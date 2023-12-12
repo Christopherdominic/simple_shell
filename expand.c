@@ -46,10 +46,10 @@ void expand_variables(container_of_program *data)
 			temp ? buffer_add(zep, temp) : 1;
 			buffer_add(zep, expansion);
 		}
-	if (!str_compare(data->custom_input_line, zep, 0))
+	if (!custom_str_compare(data->custom_input_line, zep, 0))
 	{
 		free(data->custom_input_line);
-		data->custom_input_line = str_duplicate(zep);
+		data->custom_input_line = custom_str_duplicate(zep);
 	}
 }
 
@@ -86,7 +86,7 @@ void expand_alias(container_of_program *data)
 			buffer_add(exp, line + i + j);
 			line[i] = '\0';
 			buffer_add(line, temp);
-			line[str_length(line)] = '\0';
+			line[custom_str_length(line)] = '\0';
 			buffer_add(line, exp);
 			expanded = 1;
 		}
@@ -95,7 +95,7 @@ void expand_alias(container_of_program *data)
 	if (expanded)
 	{
 		free(data->custom_input_line);
-		data->custom_input_line = str_duplicate(line);
+		data->custom_input_line = custom_str_duplicate(line);
 	}
 }
 
@@ -110,7 +110,7 @@ int buffer_add(char *buffer, char *str_to_add)
 	int len;
 	int i;
 
-	len = str_length(buffer);
+	len = custom_str_length(buffer);
 	for (i = 0; str_to_add[i]; i++)
 	{
 		buffer[len + i] = str_to_add[i];

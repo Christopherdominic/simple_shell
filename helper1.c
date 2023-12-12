@@ -32,7 +32,7 @@ void long_to_string(long number, char *string, int base)
 		string[i++] = '-';
 
 	string[i] = '\0';
-	str_reverse(string);
+	custom_str_reverse(string);
 }
 
 

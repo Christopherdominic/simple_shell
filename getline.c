@@ -32,7 +32,7 @@ int custom_getline(container_of_program *data)
 		
 		i = 0;
 		do {
-			array_size[i] = str_duplicate(_strtok(i ? NULL : buffer, "\n;"));
+			array_size[i] = custom_str_duplicate(custom_strtok(i ? NULL : buffer, "\n;"));
 
 			i = check_logic_ops(array_size, i, array_operator);
 		} while (array_size[i++]);
@@ -45,7 +45,7 @@ int custom_getline(container_of_program *data)
 		array_operator[i] = array_operator[i + 1];
 	}
 
-	return (str_length(data->custom_input_line));
+	return (custom_str_length(data->custom_input_line));
 }
 
 
@@ -69,8 +69,8 @@ int check_logic_ops(char *array_commands[], int i, char array_operators[])
 
 			temp = array_commands[i];
 			array_commands[i][j] = '\0';
-			array_commands[i] = str_duplicate(array_commands[i]);
-			array_commands[i + 1] = str_duplicate(temp + j + 2);
+			array_commands[i] = custom_str_duplicate(array_commands[i]);
+			array_commands[i + 1] = custom_str_duplicate(temp + j + 2);
 			i++;
 			array_operators[i] = '&';
 			free(temp);
@@ -81,8 +81,8 @@ int check_logic_ops(char *array_commands[], int i, char array_operators[])
 
 			temp = array_commands[i];
 			array_commands[i][j] = '\0';
-			array_commands[i] = str_duplicate(array_commands[i]);
-			array_commands[i + 1] = str_duplicate(temp + j + 2);
+			array_commands[i] = custom_str_duplicate(array_commands[i]);
+			array_commands[i + 1] = custom_str_duplicate(temp + j + 2);
 			i++;
 			array_operators[i] = '|';
 			free(temp);

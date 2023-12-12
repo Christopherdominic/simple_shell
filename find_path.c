@@ -10,45 +10,45 @@ int check_file(char *full_path);
 
 int find_program(container_of_program *data)
 {
-	int i = 0, ret_code = 0;
-	char **directories;
+	int i = 0, chris_code = 0;
+	char **director;
 
 	if (!data->custom_command_name)
 		return (2);
 
-	/**if is a full_path or an executable in the same path */
+
 	if (data->custom_command_name[0] == '/' || data->custom_command_name[0] == '.')
 		return (check_file(data->custom_command_name));
 
 	free(data->custom_tokens[0]);
-	data->custom_tokens[0] = str_concat(str_duplicate("/"), data->custom_command_name);
+	data->custom_tokens[0] = custom_str_concat(custom_str_duplicate("/"), data->custom_command_name);
 	if (!data->custom_tokens[0])
 		return (2);
 
-	directories = tokenize_path(data);/* search in the PATH */
+	director = tokenize_path(data);
 
-	if (!directories || !directories[0])
+	if (!director || !director[0])
 	{
 		errno = 127;
 		return (127);
 	}
-	for (i = 0; directories[i]; i++)
-	{/* appends the function_name to path */
-		directories[i] = str_concat(directories[i], data->custom_tokens[0]);
-		ret_code = check_file(directories[i]);
-		if (ret_code == 0 || ret_code == 126)
-		{/* the file was found, is not a directory and has execute permisions*/
+	for (i = 0; director[i]; i++)
+	{
+		director[i] = custom_str_concat(director[i], data->custom_tokens[0]);
+		chris_code = check_file(director[i]);
+		if (chris_code == 0 || chris_code == 126)
+		{
 			errno = 0;
 			free(data->custom_tokens[0]);
-			data->custom_tokens[0] = str_duplicate(directories[i]);
-			free_array_of_pointers(directories);
-			return (ret_code);
+			data->custom_tokens[0] = custom_str_duplicate(director[i]);
+			free_array_of_pointers(director);
+			return (chris_code);
 		}
 	}
 	free(data->custom_tokens[0]);
 	data->custom_tokens[0] = NULL;
-	free_array_of_pointers(directories);
-	return (ret_code);
+	free_array_of_pointers(director);
+	return (chris_code);
 }
 
 /**
@@ -60,35 +60,35 @@ int find_program(container_of_program *data)
 char **tokenize_path(container_of_program *data)
 {
 	int i = 0;
-	int counter_directories = 2;
+	int c = 2;
 	char **tokens = NULL;
 	char *PATH;
 
-	/* get the PATH value*/
+
 	PATH = env_get_key("PATH", data);
 	if ((PATH == NULL) || PATH[0] == '\0')
-	{/*path not found*/
+	{
 		return (NULL);
 	}
 
-	PATH = str_duplicate(PATH);
+	PATH = custom_str_duplicate(PATH);
 
-	/* find the number of directories in the PATH */
+
 	for (i = 0; PATH[i]; i++)
 	{
 		if (PATH[i] == ':')
-			counter_directories++;
+			c++;
 	}
 
-	/* reserve space for the array of pointers */
-	tokens = malloc(sizeof(char *) * counter_directories);
 
-	/*tokenize and duplicate each token of path*/
+	tokens = malloc(sizeof(char *) * c);
+
+
 	i = 0;
-	tokens[i] = str_duplicate(_strtok(PATH, ":"));
+	tokens[i] = custom_str_duplicate(custom_strtok(PATH, ":"));
 	while (tokens[i++])
 	{
-		tokens[i] = str_duplicate(_strtok(NULL, ":"));
+		tokens[i] = custom_str_duplicate(custom_strtok(NULL, ":"));
 	}
 
 	free(PATH);
@@ -106,18 +106,18 @@ char **tokenize_path(container_of_program *data)
 
 int check_file(char *full_path)
 {
-	struct stat sb;
+	struct stat ch;
 
-	if (stat(full_path, &sb) != -1)
+	if (stat(full_path, &ch) != -1)
 	{
-		if (S_ISDIR(sb.st_mode) ||  access(full_path, X_OK))
+		if (S_ISDIR(ch.st_mode) ||  access(full_path, X_OK))
 		{
 			errno = 126;
 			return (126);
 		}
 		return (0);
 	}
-	/*if not exist the file*/
+
 	errno = 127;
 	return (127);
 }

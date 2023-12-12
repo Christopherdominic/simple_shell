@@ -11,7 +11,7 @@ int execute(container_of_program *data)
 	pid_t pidd;
 
 	/* check for program in built ins */
-	heg = builtins_list(data);
+	heg = custom_builtins_list(data);
 	if (heg != -1)/* if program was found in built ins */
 		return (heg);
 

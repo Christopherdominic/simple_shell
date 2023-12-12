@@ -1,11 +1,11 @@
 #include "shell.h"
 
 /**
- * builtin_exit - exit of the program with the status
+ * custom_builtin_exit - exit of the program with the status
  * @data: struct for the program's data
  * Return: zero if sucess, or other number if its declared in the arguments
  */
-int builtin_exit(container_of_program *data)
+int custom_builtin_exit(container_of_program *data)
 {
 	int i;
 
@@ -25,11 +25,11 @@ int builtin_exit(container_of_program *data)
 }
 
 /**
- * builtin_cd - change the current directory
+ * custom_builtin_cd - change the current directory
  * @data: struct for the program's data
  * Return: zero if sucess, or other number if its declared in the arguments
  */
-int builtin_cd(container_of_program *data)
+int custom_builtin_cd(container_of_program *data)
 {
 	char *directory_home = env_get_key("HOME", data), *directory_old = NULL;
 	char old_directory[128] = {0};
@@ -37,11 +37,11 @@ int builtin_cd(container_of_program *data)
 
 	if (data->custom_tokens[1])
 	{
-		if (str_compare(data->custom_tokens[1], "-", 0))
+		if (custom_str_compare(data->custom_tokens[1], "-", 0))
 		{
 			directory_old = env_get_key("OLDPWD", data);
 			if (directory_old)
-				error = set_work_directory(data, directory_old);
+				error = custom_set_work_directory(data, directory_old);
 			custom_print(env_get_key("PWD", data));
 			custom_print("\n");
 
@@ -49,7 +49,7 @@ int builtin_cd(container_of_program *data)
 		}
 		else
 		{
-			return (set_work_directory(data, data->custom_tokens[1]));
+			return (custom_set_work_directory(data, data->custom_tokens[1]));
 		}
 	}
 	else
@@ -57,7 +57,7 @@ int builtin_cd(container_of_program *data)
 		if (!directory_home)
 			directory_home = getcwd(old_directory, 128);
 
-		return (set_work_directory(data, directory_home));
+		return (custom_set_work_directory(data, directory_home));
 	}
 	return (0);
 }
@@ -68,14 +68,14 @@ int builtin_cd(container_of_program *data)
  * @new_dir: path to be set as work directory
  * Return: zero if sucess, or other number if its declared in the arguments
  */
-int set_work_directory(container_of_program *data, char *new_dir)
+int custom_set_work_directory(container_of_program *data, char *new_dir)
 {
 	char old_directory[128] = {0};
 	int error = 0;
 
 	getcwd(old_directory, 128);
 
-	if (!str_compare(old_directory, new_dir, 0))
+	if (!custom_str_compare(old_directory, new_dir, 0))
 	{
 		error = chdir(new_dir);
 		if (error == -1)
@@ -90,18 +90,18 @@ int set_work_directory(container_of_program *data, char *new_dir)
 }
 
 /**
- * builtin_help - shows the environment where the shell runs
+ * custom_builtin_help - shows the environment where the shell runs
  * @data: struct for the program's data
  * Return: zero if sucess, or other number if its declared in the arguments
  */
-int builtin_help(container_of_program *data)
+int custom_builtin_help(container_of_program *data)
 {
 	int i, length = 0;
 	char *chriswork[6] = {NULL};
 
 	chriswork[0] = HELP_MSG;
 
-	/* validate args */
+
 	if (data->custom_tokens[1] == NULL)
 	{
 		custom_print(chriswork[0] + 6);
@@ -121,34 +121,34 @@ int builtin_help(container_of_program *data)
 
 	for (i = 0; chriswork[i]; i++)
 	{
-		length = str_length(data->custom_tokens[1]);
-		if (str_compare(data->custom_tokens[1], chriswork[i], length))
+		length = custom_str_length(data->custom_tokens[1]);
+		if (custom_str_compare(data->custom_tokens[1], chriswork[i], length))
 		{
 			custom_print(chriswork[i] + length + 1);
 			return (1);
 		}
 	}
-	/*if there is no match, print error and return -1 */
+
 	errno = EINVAL;
 	perror(data->custom_command_name);
 	return (0);
 }
 
 /**
- * builtin_alias - add, remove or show aliases
+ * custom_builtin_alias - add, remove or show aliases
  * @data: struct for the program's data
  * Return: zero if sucess, or other number if its declared in the arguments
  */
-int builtin_alias(container_of_program *data)
+int custom_builtin_alias(container_of_program *data)
 {
 	int i = 0;
 
-	/* if there are no arguments, print all environment */
+
 	if (data->custom_tokens[1] == NULL)
 		return (print_alias(data, NULL));
 
 	while (data->custom_tokens[++i])
-	{/* if there are arguments, set or print each env variable*/
+	{
 		if (count_characters(data->custom_tokens[i], "="))
 			set_alias(data->custom_tokens[i], data);
 		else

@@ -70,11 +70,11 @@ int buffer_add(char *buffer, char *str_to_add);
 
 void tokenize(container_of_program *data);
 
-char *_strtok(char *line, char *delim);
+char *custom_strtok(char *line, char *delim);
 
 int execute(container_of_program *data);
 
-int builtins_list(container_of_program *data);
+int custom_builtins_list(container_of_program *data);
 
 char **tokenize_path(container_of_program *data);
 
@@ -86,21 +86,21 @@ void free_recurrent_data(container_of_program *data);
 
 void free_all_data(container_of_program *data);
 
-int builtin_exit(container_of_program *data);
+int custom_builtin_exit(container_of_program *data);
 
-int builtin_cd(container_of_program *data);
+int custom_builtin_cd(container_of_program *data);
 
-int set_work_directory(container_of_program *data, char *new_dir);
+int custom_set_work_directory(container_of_program *data, char *new_dir);
 
-int builtin_help(container_of_program *data);
+int custom_builtin_help(container_of_program *data);
 
-int builtin_alias(container_of_program *data);
+int custom_builtin_alias(container_of_program *data);
 
-int builtin_env(container_of_program *data);
+int custom_builtin_env(container_of_program *data);
 
-int builtin_set_env(container_of_program *data);
+int custom_builtin_set_env(container_of_program *data);
 
-int builtin_unset_env(container_of_program *data);
+int custom_builtin_unset_env(container_of_program *data);
 
 char *env_get_key(char *name, container_of_program *data);
 
@@ -116,15 +116,15 @@ int custom_printe(char *string);
 
 int custom_print_error(int errorcode, container_of_program *data);
 
-int str_length(char *string);
+int custom_str_length(char *string);
 
-char *str_duplicate(char *string);
+char *custom_str_duplicate(char *string);
 
-int str_compare(char *string1, char *string2, int number);
+int custom_str_compare(char *string1, char *string2, int number);
 
-char *str_concat(char *string1, char *string2);
+char *custom_str_concat(char *string1, char *string2);
 
-void str_reverse(char *string);
+void custom_str_reverse(char *string);
 
 void long_to_string(long number, char *string, int base);
 

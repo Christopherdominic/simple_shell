@@ -12,7 +12,7 @@ void tokenize(container_of_program *data)
 	int count = 2;
 	int len;
 
-	len = str_length(data->custom_input_line);
+	len = custom_str_length(data->custom_input_line);
 	if (len)
 	{
 		if (data->custom_input_line[len - 1] == '\n')
@@ -35,11 +35,11 @@ void tokenize(container_of_program *data)
 		exit(errno);
 	}
 	i = 0;
-	data->custom_tokens[i] = str_duplicate(_strtok(data->custom_input_line, del));
-	data->custom_command_name = str_duplicate(data->custom_tokens[0]);
+	data->custom_tokens[i] = custom_str_duplicate(custom_strtok(data->custom_input_line, del));
+	data->custom_command_name = custom_str_duplicate(data->custom_tokens[0]);
 	while (data->custom_tokens[i++])
 	{
-		data->custom_tokens[i] = str_duplicate(_strtok(NULL, del));
+		data->custom_tokens[i] = custom_str_duplicate(custom_strtok(NULL, del));
 	}
 }
 

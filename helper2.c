@@ -8,7 +8,7 @@
  */
 int custom_print(char *string)
 {
-	return (write(STDOUT_FILENO, string, str_length(string)));
+	return (write(STDOUT_FILENO, string, custom_str_length(string)));
 }
 /**
  * custom_printe - writes a array of chars in the standar error
@@ -18,7 +18,7 @@ int custom_print(char *string)
  */
 int custom_printe(char *string)
 {
-	return (write(STDERR_FILENO, string, str_length(string)));
+	return (write(STDERR_FILENO, string, custom_str_length(string)));
 }
 
 /**

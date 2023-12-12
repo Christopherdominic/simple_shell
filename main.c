@@ -3,7 +3,7 @@
  * main - initialize the variables of the program
  * @argc: number of values received from the command line
  * @argv: values received from the command line
- * @custom_env: number of values received from the command line
+ * @env: number of values received from the command line
  * Return: zero on succes.
  */
 int main(int argc, char *argv[], char *env[])
@@ -11,9 +11,9 @@ int main(int argc, char *argv[], char *env[])
 	container_of_program data_struct = {NULL}, *data = &data_struct;
 	char *alert = "";
 
-	initialize_data(data, argc, argv, env);
+	custom_initialize_data(data, argc, argv, env);
 
-	signal(SIGINT, handle_ctrl_c);
+	signal(SIGINT, custom_handle_ctrl_c);
 
 	if (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO) && argc == 1)
 	{
@@ -26,24 +26,25 @@ int main(int argc, char *argv[], char *env[])
 }
 
 /**
- * handle_ctrl_c - print the prompt in a new line
+ * custom_handle_ctrl_c - print the prompt in a new line
  * when the signal SIGINT (ctrl + c) is send to the program
  * @UNUSED: option of the prototype
  */
-void handle_ctrl_c(int opr UNUSED)
+void custom_handle_ctrl_c(int opr UNUSED)
 {
 	custom_print("\n");
 	custom_print(PROMPT_MSG);
 }
 
 /**
- * initialize_data - inicialize the struct with the info of the program
+ * custom_initialize_data - initialize the struct with the info of the program
  * @data: pointer to the structure of data
  * @argv: array of arguments pased to the program execution
  * @env: environ pased to the program execution
  * @argc: number of values received from the command line
  */
-void initialize_data(container_of_program *data, int argc, char *argv[], char **env)
+void custom_initialize_data(container_of_program *data, int argc,
+		char *argv[], char **env)
 {
 	int j = 0;
 
@@ -51,7 +52,7 @@ void initialize_data(container_of_program *data, int argc, char *argv[], char **
 	data->custom_input_line = NULL;
 	data->custom_command_name = NULL;
 	data->custom_exec_counter = 0;
-	
+
 	if (argc == 1)
 		data->custom_fd = STDIN_FILENO;
 	else
@@ -100,8 +101,8 @@ void ifo(char *prompt, container_of_program *data)
 
 		if (error == EOF)
 		{
-			free_all_data(data);
-			exit(errno); /* if EOF is the fisrt Char of string, exit*/
+			custom_free_all_data(data);
+			exit(errno);
 		}
 		if (string_len >= 1)
 		{
@@ -109,12 +110,12 @@ void ifo(char *prompt, container_of_program *data)
 			custom_expand_variables(data);
 			custom_tokenize(data);
 			if (data->custom_tokens[0])
-			{ /* if a text is given to prompt, custom_execute */
+			{
 				error = custom_execute(data);
 				if (error != 0)
 					custom_print_error(error, data);
 			}
-			free_recurrent_data(data);
+			custom_free_recurrent_data(data);
 		}
 	}
 }

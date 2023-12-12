@@ -8,11 +8,8 @@
  */
 void custom_expand_variables(container_of_program *data)
 {
-	int i;
-	int j;
-	char zep[BUFFER_SIZE] = {0};
-	char expansion[BUFFER_SIZE] = {'\0'};
-	char *temp;
+	int i, j;
+	char zep[BUFFER_SIZE] = {0}, expansion[BUFFER_SIZE] = {'\0'}, *temp;
 
 	if (data->custom_input_line == NULL)
 		return;
@@ -23,14 +20,14 @@ void custom_expand_variables(container_of_program *data)
 		else if (zep[i] == '$' && zep[i + 1] == '?')
 		{
 			zep[i] = '\0';
-			long_to_string(errno, expansion, 10);
+			custom_long_to_string(errno, expansion, 10);
 			custom_buffer_add(zep, expansion);
 			custom_buffer_add(zep, data->custom_input_line + i + 2);
 		}
 		else if (zep[i] == '$' && zep[i + 1] == '$')
 		{
 			zep[i] = '\0';
-			long_to_string(getpid(), expansion, 10);
+			custom_long_to_string(getpid(), expansion, 10);
 			custom_buffer_add(zep, expansion);
 			custom_buffer_add(zep, data->custom_input_line + i + 2);
 		}
@@ -40,7 +37,7 @@ void custom_expand_variables(container_of_program *data)
 		{
 			for (j = 1; zep[i + j] && zep[i + j] != ' '; j++)
 				expansion[j - 1] = zep[i + j];
-			temp = env_get_key(expansion, data);
+			temp = custom_env_get_key(expansion, data);
 			zep[i] = '\0', expansion[0] = '\0';
 			custom_buffer_add(expansion, zep + i + j);
 			temp ?	custom_buffer_add(zep, temp) : 1;
@@ -66,7 +63,7 @@ void custom_expand_alias(container_of_program *data)
 	int expanded = 0;
 	char line[BUFFER_SIZE] = {0};
 	char exp[BUFFER_SIZE] = {'\0'};
-	char*temp;
+	char *temp;
 
 	if (data->custom_input_line == NULL)
 		return;

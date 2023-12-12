@@ -1,13 +1,13 @@
 #include "shell.h"
 /**
- * tokenize - this function separate the string using a designed delimiter
+ * custom_tokenize - this function separate the
  * @data: a pointer to the program's data
  * Return: an array of the different parts of the string
  */
 void custom_tokenize(container_of_program *data)
 {
 	char *del = " \t";
-	int i; 
+	int i;
 	int j;
 	int count = 2;
 	int len;
@@ -35,7 +35,8 @@ void custom_tokenize(container_of_program *data)
 		exit(errno);
 	}
 	i = 0;
-	data->custom_tokens[i] = custom_str_duplicate(custom_strtok(data->custom_input_line, del));
+	data->custom_tokens[i] = custom_str_duplicate
+		(custom_strtok(data->custom_input_line, del));
 	data->custom_command_name = custom_str_duplicate(data->custom_tokens[0]);
 	while (data->custom_tokens[i++])
 	{

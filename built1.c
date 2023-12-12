@@ -13,27 +13,27 @@ int custom_builtin_env(container_of_program *data)
 
 
 	if (data->custom_tokens[1] == NULL)
-		print_environ(data);
+		custom_print_environ(data);
 	else
 	{
 		for (i = 0; data->custom_tokens[1][i]; i++)
 		{
 			if (data->custom_tokens[1][i] == '=')
 			{
-				var_copy = custom_str_duplicate(env_get_key(cpname, data));
+				var_copy = custom_str_duplicate(custom_env_get_key(cpname, data));
 				if (var_copy != NULL)
-					env_set_key(cpname, data->custom_tokens[1] + i + 1, data);
+					custom_env_set_key(cpname, data->custom_tokens[1] + i + 1, data);
 
 
-				print_environ(data);
-				if (env_get_key(cpname, data) == NULL)
+				custom_print_environ(data);
+				if (custom_env_get_key(cpname, data) == NULL)
 				{
 					custom_print(data->custom_tokens[1]);
 					custom_print("\n");
 				}
 				else
 				{
-					env_set_key(cpname, var_copy, data);
+					custom_env_set_key(cpname, var_copy, data);
 					free(var_copy);
 				}
 				return (0);
@@ -64,7 +64,7 @@ int custom_builtin_set_env(container_of_program *data)
 		return (5);
 	}
 
-	env_set_key(data->custom_tokens[1], data->custom_tokens[2], data);
+	custom_env_set_key(data->custom_tokens[1], data->custom_tokens[2], data);
 
 	return (0);
 }
@@ -85,7 +85,7 @@ int custom_builtin_unset_env(container_of_program *data)
 		perror(data->custom_command_name);
 		return (5);
 	}
-	env_remove_key(data->custom_tokens[1], data);
+	custom_env_remove_key(data->custom_tokens[1], data);
 
 	return (0);
 }

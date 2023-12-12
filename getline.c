@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
-* _getline - read one line from the prompt.
+* custom_getline - read one line from the prompt.
 * @data: struct for the program's data
 *
 * Return: reading counting bytes.
@@ -17,22 +17,23 @@ int custom_getline(container_of_program *data)
 	if (!array_size[0] || (array_operator[0] == '&' && errno != 0) ||
 		(array_operator[0] == '|' && errno == 0))
 	{
-	
+
 		for (i = 0; array_size[i]; i++)
 		{
 			free(array_size[i]);
 			array_size[i] = NULL;
 		}
 
-		
+
 		bytes_read = read(data->custom_fd, &buffer, BUFFER_SIZE - 1);
 		if (bytes_read == 0)
 			return (-1);
 
-		
+
 		i = 0;
 		do {
-			array_size[i] = custom_str_duplicate(custom_strtok(i ? NULL : buffer, "\n;"));
+			array_size[i] = custom_str_duplicate(custom_strtok(
+						i ? NULL : buffer, "\n;"));
 
 			i = custom_check_logic_ops(array_size, i, array_operator);
 		} while (array_size[i++]);
@@ -57,7 +58,8 @@ int custom_getline(container_of_program *data)
 *
 * Return: index of the last command in the array_commands.
 */
-int custom_check_logic_ops(char *array_commands[], int i, char array_operators[])
+int custom_check_logic_ops(char *array_commands[], int i,
+		char array_operators[])
 {
 	char *temp = NULL;
 	int j;

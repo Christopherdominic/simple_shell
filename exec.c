@@ -6,7 +6,7 @@
  */
 int custom_execute(container_of_program *data)
 {
-	int heg = 0; 
+	int heg = 0;
 	int status;
 	pid_t pidd;
 
@@ -16,7 +16,7 @@ int custom_execute(container_of_program *data)
 		return (heg);
 
 	/* check for program file system */
-	heg = find_program(data);
+	heg = custom_find_program(data);
 	if (heg)
 	{/* if program not found */
 		return (heg);

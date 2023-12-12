@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * custom_builtins_list - search for match and custom_execute the associate builtin
+ * custom_builtins_list - search for match and cust
  * @data: struct for the program's data
  * Return: Returns the return of the function executed is there is a match,
  * otherwise returns -1.
@@ -23,7 +23,8 @@ int custom_builtins_list(container_of_program *data)
 	for (christo = 0; options[christo].builtin != NULL; christo++)
 	{
 
-		if (custom_str_compare(options[christo].builtin, data->custom_command_name, 0))
+		if (custom_str_compare(options[christo].builtin,
+					data->custom_command_name, 0))
 		{
 
 			return (options[christo].function(data));

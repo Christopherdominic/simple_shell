@@ -18,9 +18,9 @@ int custom_builtin_exit(container_of_program *data)
 				errno = 2;
 				return (2);
 			}
-		errno = _atoi(data->custom_tokens[1]);
+		errno = custom_atoi(data->custom_tokens[1]);
 	}
-	free_all_data(data);
+	custom_free_all_data(data);
 	exit(errno);
 }
 
@@ -31,7 +31,8 @@ int custom_builtin_exit(container_of_program *data)
  */
 int custom_builtin_cd(container_of_program *data)
 {
-	char *directory_home = env_get_key("HOME", data), *directory_old = NULL;
+	char *directory_home = custom_env_get_key("HOME", data),
+	     *directory_old = NULL;
 	char old_directory[128] = {0};
 	int error = 0;
 
@@ -39,10 +40,10 @@ int custom_builtin_cd(container_of_program *data)
 	{
 		if (custom_str_compare(data->custom_tokens[1], "-", 0))
 		{
-			directory_old = env_get_key("OLDPWD", data);
+			directory_old = custom_env_get_key("OLDPWD", data);
 			if (directory_old)
 				error = custom_set_work_directory(data, directory_old);
-			custom_print(env_get_key("PWD", data));
+			custom_print(custom_env_get_key("PWD", data));
 			custom_print("\n");
 
 			return (error);
@@ -63,7 +64,7 @@ int custom_builtin_cd(container_of_program *data)
 }
 
 /**
- * set_work_directory - set the work directory
+ * custom_set_work_directory - set the work directory
  * @data: struct for the program's data
  * @new_dir: path to be set as work directory
  * Return: zero if sucess, or other number if its declared in the arguments
@@ -83,9 +84,9 @@ int custom_set_work_directory(container_of_program *data, char *new_dir)
 			errno = 2;
 			return (3);
 		}
-		env_set_key("PWD", new_dir, data);
+		custom_env_set_key("PWD", new_dir, data);
 	}
-	env_set_key("OLDPWD", old_directory, data);
+	custom_env_set_key("OLDPWD", old_directory, data);
 	return (0);
 }
 
@@ -149,7 +150,7 @@ int custom_builtin_alias(container_of_program *data)
 
 	while (data->custom_tokens[++i])
 	{
-		if (count_characters(data->custom_tokens[i], "="))
+		if (custom_count_characters(data->custom_tokens[i], "="))
 			custom_set_alias(data->custom_tokens[i], data);
 		else
 			custom_print_alias(data, data->custom_tokens[i]);

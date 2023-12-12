@@ -32,7 +32,7 @@ int custom_print_error(int errorcode, container_of_program *data)
 {
 	char chris_string[10] = {'\0'};
 
-	long_to_string((long) data->custom_exec_counter, chris_string, 10);
+	custom_long_to_string((long) data->custom_exec_counter, chris_string, 10);
 
 	if (errorcode == 2 || errorcode == 3)
 	{

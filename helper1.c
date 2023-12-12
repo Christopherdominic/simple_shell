@@ -1,14 +1,14 @@
 #include "shell.h"
 
 /**
- * long_to_string - converts a number to a string.
+ * custom_long_to_string - converts a number to a string.
  * @number: number to be converten in an string.
  * @string: buffer to save the number as string.
  * @base: base to convert number
  *
  * Return: Nothing.
  */
-void long_to_string(long number, char *string, int base)
+void  custom_long_to_string(long number, char *string, int base)
 {
 	int i = 0, Negative = 0;
 	long chris = number;
@@ -37,12 +37,12 @@ void long_to_string(long number, char *string, int base)
 
 
 /**
- * _atoi - convert a string to an integer.
+ *  custom_atoi - convert a string to an integer.
  *
  * @s: pointer to str origen.
  * Return: int of string or 0.
  */
-int _atoi(char *s)
+int  custom_atoi(char *s)
 {
 	int signal = 1;
 	unsigned int number = 0;
@@ -67,13 +67,13 @@ int _atoi(char *s)
 }
 
 /**
- * count_characters - count the coincidences of character in string.
+ * custom_count_characters - count the coincidences of character in string.
  *
  * @string: pointer to str origen.
  * @character: string with  chars to be counted
  * Return: int of string or 0.
  */
-int count_characters(char *string, char *character)
+int custom_count_characters(char *string, char *character)
 {
 	int i = 0, count = 0;
 

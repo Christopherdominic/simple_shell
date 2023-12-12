@@ -1,12 +1,12 @@
 #include "shell.h"
 
 /**
- * env_get_key - gets the value of an environment variable
+ * custom_env_get_key - gets the value of an environment variable
  * @key: the environment variable of interest
  * @data: struct of the program's data
  * Return: a pointer to the value of the variable or NULL if it doesn't exist
  */
-char *env_get_key(char *key, container_of_program *data)
+char *custom_env_get_key(char *key, container_of_program *data)
 {
 	int j, length = 0;
 
@@ -30,7 +30,7 @@ char *env_get_key(char *key, container_of_program *data)
 }
 
 /**
- * env_set_key - overwrite the value of the environment variable
+ * custom_env_set_key - overwrite the value of the environment variable
  * or create it if does not exist.
  * @key: name of the variable to set
  * @value: new value
@@ -38,7 +38,7 @@ char *env_get_key(char *key, container_of_program *data)
  * Return: 1 if the parameters are NULL, 2 if there is an erroror 0 if sucess.
  */
 
-int env_set_key(char *key, char *value, container_of_program *data)
+int custom_env_set_key(char *key, char *value, container_of_program *data)
 {
 	int i, length = 0, keyed = 1;
 
@@ -55,7 +55,7 @@ int env_set_key(char *key, char *value, container_of_program *data)
 		 data->custom_env[i][length] == '=')
 		{
 			keyed = 0;
-		
+
 			free(data->custom_env[i]);
 			break;
 		}
@@ -72,12 +72,12 @@ int env_set_key(char *key, char *value, container_of_program *data)
 }
 
 /**
- * env_remove_key - remove a key from the environment
+ * custom_env_remove_key - remove a key from the environment
  * @key: the key to remove
  * @data: the sructure of the program's data
  * Return: 1 if the key was removed, 0 if the key does not exist;
  */
-int env_remove_key(char *key, container_of_program *data)
+int custom_env_remove_key(char *key, container_of_program *data)
 {
 	int i, length = 0;
 
@@ -94,7 +94,7 @@ int env_remove_key(char *key, container_of_program *data)
 		{
 			free(data->custom_env[i]);
 
-		
+
 			i++;
 			for (; data->custom_env[i]; i++)
 			{
@@ -110,11 +110,11 @@ int env_remove_key(char *key, container_of_program *data)
 
 
 /**
- * print_environ - prints the current environ
+ * custom_print_environ - prints the current environ
  * @data: struct for the program's data
  * Return: nothing
  */
-void print_environ(container_of_program *data)
+void custom_print_environ(container_of_program *data)
 {
 	int i;
 

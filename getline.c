@@ -34,7 +34,7 @@ int custom_getline(container_of_program *data)
 		do {
 			array_size[i] = custom_str_duplicate(custom_strtok(i ? NULL : buffer, "\n;"));
 
-			i = check_logic_ops(array_size, i, array_operator);
+			i = custom_check_logic_ops(array_size, i, array_operator);
 		} while (array_size[i++]);
 	}
 
@@ -50,14 +50,14 @@ int custom_getline(container_of_program *data)
 
 
 /**
-* check_logic_ops - checks and split for && and || operators
+* custom_check_logic_ops - checks and split for && and || operators
 * @array_commands: array of the commands.
 * @i: index in the array_commands to be checked
 * @array_operators: array of the logical operators for each previous command
 *
 * Return: index of the last command in the array_commands.
 */
-int check_logic_ops(char *array_commands[], int i, char array_operators[])
+int custom_check_logic_ops(char *array_commands[], int i, char array_operators[])
 {
 	char *temp = NULL;
 	int j;

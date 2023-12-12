@@ -60,7 +60,7 @@ void handle_ctrl_c(int opr UNUSED);
 
 int custom_getline(container_of_program *data);
 
-int check_logic_ops(char *array_commands[], int i, char array_operators[]);
+int custom_check_logic_ops(char *array_commands[], int i, char array_operators[]);
 
 void custom_expand_variables(container_of_program *data);
 

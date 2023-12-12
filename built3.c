@@ -145,14 +145,14 @@ int custom_builtin_alias(container_of_program *data)
 
 
 	if (data->custom_tokens[1] == NULL)
-		return (print_alias(data, NULL));
+		return (custom_print_alias(data, NULL));
 
 	while (data->custom_tokens[++i])
 	{
 		if (count_characters(data->custom_tokens[i], "="))
-			set_alias(data->custom_tokens[i], data);
+			custom_set_alias(data->custom_tokens[i], data);
 		else
-			print_alias(data, data->custom_tokens[i]);
+			custom_print_alias(data, data->custom_tokens[i]);
 	}
 
 	return (0);

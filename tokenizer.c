@@ -4,7 +4,7 @@
  * @data: a pointer to the program's data
  * Return: an array of the different parts of the string
  */
-void tokenize(container_of_program *data)
+void custom_tokenize(container_of_program *data)
 {
 	char *del = " \t";
 	int i; 

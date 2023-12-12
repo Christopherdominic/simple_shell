@@ -1,12 +1,12 @@
 #include "shell.h"
 
 /**
- * print_alias - add, remove or show aliases
+ * custom_print_alias - add, remove or show aliases
  * @data: struct for the program's data
  * @alias: name of the alias to be printed
  * Return: zero if sucess, or other number if its declared in the arguments
  */
-int print_alias(container_of_program *data, char *alias)
+int custom_print_alias(container_of_program *data, char *alias)
 {
 	int i, j, len;
 	char buffer[250] = {'\0'};
@@ -26,9 +26,9 @@ int print_alias(container_of_program *data, char *alias)
 						break;
 				}
 				buffer[j + 1] = '\0';
-				buffer_add(buffer, "'");
-				buffer_add(buffer, data->custom_alias_list[i] + j + 1);
-				buffer_add(buffer, "'\n");
+				custom_buffer_add(buffer, "'");
+				custom_buffer_add(buffer, data->custom_alias_list[i] + j + 1);
+				custom_buffer_add(buffer, "'\n");
 				custom_print(buffer);
 			}
 		}
@@ -38,12 +38,12 @@ int print_alias(container_of_program *data, char *alias)
 }
 
 /**
- * get_alias - add, remove or show aliases
+ * custom_get_alias - add, remove or show aliases
  * @data: struct for the program's data
  * @name: name of the requested alias.
  * Return: zero if sucess, or other number if its declared in the arguments
  */
-char *get_alias(container_of_program *data, char *name)
+char *custom_get_alias(container_of_program *data, char *name)
 {
 	int i, len;
 
@@ -67,17 +67,16 @@ char *get_alias(container_of_program *data, char *name)
 }
 
 /**
- * set_alias - add, or override alias
+ * custom_set_alias - add, or override alias
  * @alias_string: alias to be seted in the form (name='value')
  * @data: struct for the program's data
  * Return: zero if sucess, or other number if its declared in the arguments
  */
-int set_alias(char *alias_string, container_of_program *data)
+int custom_set_alias(char *alias_string, container_of_program *data)
 {
 	int i, j;
 	char buffer[250] = {'0'}, *temp = NULL;
 
-	if (alias_string == NULL ||  data->custom_alias_list == NULL)
 		return (1);
 
 	for (i = 0; alias_string[i]; i++)
@@ -85,7 +84,7 @@ int set_alias(char *alias_string, container_of_program *data)
 			buffer[i] = alias_string[i];
 		else
 		{
-			temp = get_alias(data, alias_string + i + 1);
+			temp = custom_get_alias(data, alias_string + i + 1);
 			break;
 		}
 
@@ -101,8 +100,8 @@ int set_alias(char *alias_string, container_of_program *data)
 
 	if (temp)
 	{
-		buffer_add(buffer, "=");
-		buffer_add(buffer, temp);
+		custom_buffer_add(buffer, "=");
+		custom_buffer_add(buffer, temp);
 		data->custom_alias_list[j] = custom_str_duplicate(buffer);
 	}
 	else

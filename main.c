@@ -50,7 +50,7 @@ void initialize_data(container_of_program *data, int argc, char *argv[], char **
 	data->custom_program_name = argv[0];
 	data->custom_input_line = NULL;
 	data->custom_command_name = NULL;
-data->custom_exec_counter = 0;
+	data->custom_exec_counter = 0;
 	
 	if (argc == 1)
 		data->custom_fd = STDIN_FILENO;
@@ -105,12 +105,12 @@ void ifo(char *prompt, container_of_program *data)
 		}
 		if (string_len >= 1)
 		{
-			expand_alias(data);
-			expand_variables(data);
-			tokenize(data);
+			custom_expand_alias(data);
+			custom_expand_variables(data);
+			custom_tokenize(data);
 			if (data->custom_tokens[0])
-			{ /* if a text is given to prompt, execute */
-				error = execute(data);
+			{ /* if a text is given to prompt, custom_execute */
+				error = custom_execute(data);
 				if (error != 0)
 					custom_print_error(error, data);
 			}

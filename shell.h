@@ -62,17 +62,17 @@ int custom_getline(container_of_program *data);
 
 int check_logic_ops(char *array_commands[], int i, char array_operators[]);
 
-void expand_variables(container_of_program *data);
+void custom_expand_variables(container_of_program *data);
 
-void expand_alias(container_of_program *data);
+void custom_expand_alias(container_of_program *data);
 
-int buffer_add(char *buffer, char *str_to_add);
+int custom_buffer_add(char *buffer, char *str_to_add);
 
-void tokenize(container_of_program *data);
+void custom_tokenize(container_of_program *data);
 
 char *custom_strtok(char *line, char *delim);
 
-int execute(container_of_program *data);
+int custom_execute(container_of_program *data);
 
 int custom_builtins_list(container_of_program *data);
 
@@ -132,11 +132,11 @@ int _atoi(char *s);
 
 int count_characters(char *string, char *character);
 
-int print_alias(container_of_program *data, char *alias);
+int custom_print_alias(container_of_program *data, char *alias);
 
-char *get_alias(container_of_program *data, char *alias);
+char *custom_get_alias(container_of_program *data, char *alias);
 
-int set_alias(char *alias_string, container_of_program *data);
+int custom_set_alias(char *alias_string, container_of_program *data);
 
 #endif /* SHELL_H */
 

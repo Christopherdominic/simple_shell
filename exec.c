@@ -1,10 +1,10 @@
 #include "shell.h"
 /**
- * execute - execute a command with its entire path variables.
+ * custom_execute - custom_execute a command with its entire path variables.
  * @data: a pointer to the program's data
  * Return: If sucess returns zero, otherwise, return -1.
  */
-int execute(container_of_program *data)
+int custom_execute(container_of_program *data)
 {
 	int heg = 0; 
 	int status;
@@ -30,7 +30,7 @@ int execute(container_of_program *data)
 			exit(EXIT_FAILURE);
 		}
 		if (pidd == 0)
-		{/* I am the child process, I execute the program*/
+		{/* I am the child process, I custom_execute the program*/
 			heg = execve(data->custom_tokens[0], data->custom_tokens, data->custom_env);
 			if (heg == -1) /* if error when execve*/
 				perror(data->custom_command_name), exit(EXIT_FAILURE);

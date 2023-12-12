@@ -19,14 +19,14 @@
 
 /**
  * struct info- struct for the program's data
- * @program_name: the name of the executable
- * @input_line: pointer to the input read for _getline
- * @command_name: pointer to the first command typed by the user
- * @exec_counter: number of excecuted comands
- * @file_descriptor: file descriptor to the input of commands
- * @tokens: pointer to array of tokenized input
- * @env: copy of the environ
- * @alias_list: array of pointers with aliases.
+ * @custom_program_name: the name of the executable
+ * @custom_input_line: pointer to the input read for _getline
+ * @custom_command_name: pointer to the first command typed by the user
+ * @custom_exec_counter: number of excecuted comands
+ * @custom_fd: file descriptor to the input of commands
+ * @custom_tokens: pointer to array of tokenized input
+ * @custom_env: copy of the environ
+ * @custom_alias_list: array of pointers with aliases.
  */
 typedef struct info
 {
@@ -52,7 +52,8 @@ typedef struct builtins
 } builtins;
 
 
-void custom_initialize_data(container_of_program *data, int arc, char *argv[], char **env);
+void custom_initialize_data(container_of_program *data,
+		int arc, char *argv[], char **env);
 
 void ifo(char *prompt, container_of_program *data);
 
@@ -60,7 +61,8 @@ void custom_handle_ctrl_c(int opr UNUSED);
 
 int custom_getline(container_of_program *data);
 
-int custom_check_logic_ops(char *array_commands[], int i, char array_operators[]);
+int custom_check_logic_ops(char *array_commands[],
+		int i, char array_operators[]);
 
 void custom_expand_variables(container_of_program *data);
 
